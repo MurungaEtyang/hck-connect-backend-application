@@ -1,5 +1,6 @@
-import { addNavItem } from '../../services/navigationService';
+
 import {Router} from "express";
+import { addNavItem } from "../../services/navigationService.js";
 
 const router = Router();
 

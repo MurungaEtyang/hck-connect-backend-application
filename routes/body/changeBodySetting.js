@@ -5,10 +5,12 @@ const router = Router();
 
 /**
  * @swagger
- * /api/body-settings:
+ * /api/kenf/management/body-setting/update-body-settings:
  *   post:
  *     summary: Update the body styling (background color, font, etc.)
  *     description: Allows users to update various styling properties like background color, font family, font size, etc.
+ *     tags:
+ *         - body settings
  *     requestBody:
  *       required: true
  *       content:
@@ -78,7 +80,7 @@ const router = Router();
  *         description: Error updating body styling
  */
 
-router.post('/api/body-settings', async (req, res) => {
+router.post('/update-body-settings', async (req, res) => {
     const { color, font_family, font_size, font_color, line_height, text_align } = req.body;
 
     if (!/^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$/.test(color)) {
@@ -111,3 +113,5 @@ router.post('/api/body-settings', async (req, res) => {
         res.status(500).send('Error updating body settings');
     }
 });
+
+export default router;

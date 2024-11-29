@@ -1,5 +1,5 @@
 
-import pool from '../database/Config.js';
+import pool from '../database/config.js';
 
 /**
  * Middleware to check if the user has the required permission
