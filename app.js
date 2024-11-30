@@ -9,7 +9,7 @@ import routes from './routes/index.js';
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'http://example.com', 'https://anotherdomain.com'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5000', 'https://anotherdomain.com'];
 
 const corsOptions = {
     origin: (origin, callback) => {

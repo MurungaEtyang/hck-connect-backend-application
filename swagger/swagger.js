@@ -12,7 +12,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: `${process.env.SWAGGER_DOCS_URL || 'http://localhost:3000'}`,
+                url: `${process.env.SWAGGER_DOCS_URL || 'http://localhost:5000'}`,
             },
         ],
         components: {
@@ -30,7 +30,7 @@ const swaggerOptions = {
         '../hck-connect/routes/logo/*.js',
         '../hck-connect/routes/body/*.js',
         '../hck-connect/routes/nav-controller/color/*.js',
-        '../middleware/*.js',
+        '../hck-connect/routes/body/pages/*.js',
         '../docs/*.yaml',
     ],
 };
