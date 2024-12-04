@@ -15,13 +15,15 @@ import updateNavbarColor from "./nav-controller/color/updateNavbarColor.js";
 import retrieveNavbarColor from "./nav-controller/color/retrieveNavbarColor.js";
 import changeBodySetting from "./body/changeBodySetting.js";
 import getBodySetting from "./body/getBodySetting.js";
+import allPages from "./pages/allPages.js";
 
 const router = Router()
 
+router.use('/pages/', allPages);
 router.use('/body-setting/', changeBodySetting);
 router.use('/body-setting/', getBodySetting);
-router.use('/nav-color/', updateNavbarColor);
-router.use('/nav-color/', retrieveNavbarColor);
+router.use('/navbar-setting/', updateNavbarColor);
+router.use('/navbar-setting/', retrieveNavbarColor);
 router.use('/kenf-logo/', uploadLogo);
 router.use('/kenf-logo/', changeLogo);
 router.use('/kenf-logo/', deleteLogo);

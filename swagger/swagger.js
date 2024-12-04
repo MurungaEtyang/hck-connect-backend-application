@@ -26,11 +26,12 @@ const swaggerOptions = {
         },
     },
     apis: [
-        '../hck-connect/routes/nav-controller/*.js',
-        '../hck-connect/routes/logo/*.js',
-        '../hck-connect/routes/body/*.js',
-        '../hck-connect/routes/nav-controller/color/*.js',
-        '../hck-connect/routes/body/pages/*.js',
+        '../backend-application/routes/nav-controller/*.js',
+        '../backend-application/routes/logo/*.js',
+        '../backend-application/routes/body/*.js',
+        '../backend-application/routes/nav-controller/color/*.js',
+        '../backend-application/routes/body/pages/*.js',
+        '../backend-application/routes/pages/*.js',
         '../docs/*.yaml',
     ],
 };

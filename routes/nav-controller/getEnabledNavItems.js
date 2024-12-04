@@ -1,5 +1,7 @@
 import { Router } from "express";
 import pool from "../../database/config.js";
+import generatePages from "./auto-page-generator/generatePages.js";
+// import generatePages from "./auto-page-generator/generatePages.js";
 const router = Router();
 
 /**
@@ -36,10 +38,18 @@ const router = Router();
  */
 router.get('/active-items', async (req, res) => {
     try {
+
         const [rows] = await pool.query(
             'SELECT * FROM navigation_items WHERE status = ?',
             ['active']
         );
+        try {
+            generatePages(rows);
+        } catch (error) {
+            console.error('Error generating pages:', error);
+            return res.status(500).send('Error generating pages.');
+        }
+
 
         res.json(rows);
     } catch (error) {
