@@ -6,6 +6,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swagger.js';
 import cors from 'cors';
 import routes from './routes/index.js';
+import allPages from "./routes/pages/allPages.js";
+import path from "path";
+import {serveFolderIndex} from "./models/folderService.js";
 
 const app = express();
 
@@ -28,6 +31,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/kenf/management/', routes);
+app.use(express.static(path.join(process.cwd(), 'public')));
+
+app.get('/api/kenf/management/pages/:folder', (req, res) => {
+    const folderName = req.params.folder;
+
+    serveFolderIndex(folderName, res);
+})
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

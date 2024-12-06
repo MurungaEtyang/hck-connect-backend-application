@@ -1,11 +1,15 @@
-import { Router } from "express";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const pagesDir = path.join(__dirname, '..', '..', 'public', 'pages');
+
+const staticDir = path.join(__dirname, '..', '..', 'public');
+const pagesDir = path.join(staticDir, '');
+
+const router = express.Router();
 
 /**
  * @swagger
@@ -27,28 +31,21 @@ const pagesDir = path.join(__dirname, '..', '..', 'public', 'pages');
  *         description: Page or file not found.
  */
 
-const router = Router();
-
 router.get('/:name', (req, res) => {
     const pageName = req.params.name;
+    const filePath = path.join(pagesDir, pageName, 'index.html');
 
-    const pageFolderPath = path.join(pagesDir, pageName);
-    const filePath = path.join(pageFolderPath, 'index.html');
-
-    try {
-        if (!fs.existsSync(pageFolderPath)) {
-            return res.sendFile(path.join(pagesDir, 'page-not-found', 'index.html'));
+    fs.stat(filePath, (err, stats) => {
+        if (err || !stats.isFile()) {
+            return res.status(404).sendFile(path.join(pagesDir, 'page-not-found', 'index.html'));
         }
-
-        if (!fs.existsSync(filePath)) {
-            return res.sendFile(path.join(pagesDir, 'page-not-found', 'index.html'));
-        }
-
-        res.sendFile(filePath);
-    } catch (err) {
-        console.error('Error accessing file:', err);
-        res.status(500).send({ error: 'Internal server error' });
-    }
+        res.sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Error sending file:', err);
+                res.status(500).send({ error: 'Internal server error' });
+            }
+        });
+    });
 });
 
 export default router;

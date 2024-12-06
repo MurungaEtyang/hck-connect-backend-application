@@ -1,6 +1,6 @@
 import { Router } from "express";
 import pool from "../../database/config.js";
-import generatePages from "./auto-page-generator/generatePages.js";
+import generatePages from "../../utils/auto-page-generator/generatePages.js";
 // import generatePages from "./auto-page-generator/generatePages.js";
 const router = Router();
 

@@ -17,7 +17,7 @@ function toDashCase(name) {
  * Generates HTML files and corresponding directories for given pages.
  */
 function generatePages(pages) {
-    const outputDir = './public/pages';
+    const outputDir = './public';
     console.log(`Output directory: ${outputDir}`);
 
     if (!fs.existsSync(outputDir)) {
@@ -31,7 +31,7 @@ function generatePages(pages) {
 
         if (!fs.existsSync(folderPath)) {
             fs.mkdirSync(folderPath, { recursive: true });
-            console.log(`Created folder: ${folderPath}`);
+            // console.log(`Created folder: ${folderPath}`);
         }
 
         const fileName = 'index.html';
@@ -39,7 +39,7 @@ function generatePages(pages) {
 
         console.log(`Checking if file exists: ${filePath}`);
         if (fs.existsSync(filePath)) {
-            console.log(`File already exists: ${filePath}`);
+            // console.log(`File already exists: ${filePath}`);
             return;
         }
 
@@ -62,7 +62,6 @@ function generatePages(pages) {
         console.log(`Created file: ${filePath}`);
     });
 
-    // Create page-not-found page
     const folderName = 'page-not-found';
     const folderPath = path.join(outputDir, folderName);
 
