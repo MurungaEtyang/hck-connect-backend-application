@@ -12,7 +12,7 @@ import {serveFolderIndex} from "./models/folderService.js";
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5000', 'https://anotherdomain.com'];
+const allowedOrigins = ['https://7bf0-102-0-17-52.ngrok-free.app', 'http://localhost:3000', 'http://localhost:5000', 'https://anotherdomain.com'];
 
 const corsOptions = {
     origin: (origin, callback) => {
@@ -33,7 +33,7 @@ app.use(express.json());
 app.use('/api/kenf/management/', routes);
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-app.get('/api/kenf/management/pages/:folder', (req, res) => {
+app.get('/api/kenf/management/pages/:folder/:title?', (req, res) => {
     const folderName = req.params.folder;
 
     serveFolderIndex(folderName, res);
