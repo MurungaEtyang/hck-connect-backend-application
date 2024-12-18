@@ -3,14 +3,14 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import pool from "../../database/config.js";
+import pool from '../../database/config.js'; // Replace with your actual database config
 
 const router = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Define where to store the uploaded files
+// Configure Multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const logoDirectory = path.join(__dirname, '../../public/images/logos');
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
     },
 });
 
-// Configure multer with file filter to allow only image files
+// File filter to restrict to image types
 const upload = multer({
     storage,
     fileFilter: (req, file, cb) => {
@@ -44,7 +44,7 @@ const upload = multer({
  *     summary: Upload a new logo
  *     description: Upload a logo file to the server.
  *     tags:
- *       - logo
+ *       - Logo
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -72,15 +72,26 @@ const upload = multer({
  *       500:
  *         description: Internal server error.
  */
-router.post('/upload', upload.single('logo'), (req, res) => {
+router.post('/upload', (req, res, next) => {
+    upload.single('logo')(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            console.error('Multer Error:', err);
+            return res.status(400).json({ message: err.message });
+        } else if (err) {
+            console.error('Unexpected Error:', err);
+            return res.status(500).json({ message: 'Unexpected error occurred.' });
+        }
+        next();
+    });
+}, (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded or invalid file type.' });
     }
 
-    const filePath = `/images/logos/${req.file.filename}`; // Public URL for the image
+    const filePath = `/images/logos/${req.file.filename}`;
     const query = 'INSERT INTO logos (file_path) VALUES (?)';
 
-    pool.query(query, [filePath], (err, result) => {
+    pool.query(query, [filePath], (err) => {
         if (err) {
             console.error('Error saving logo path to database:', err);
             return res.status(500).json({ message: 'Failed to save logo to database' });
@@ -93,4 +104,3 @@ router.post('/upload', upload.single('logo'), (req, res) => {
 });
 
 export default router;
-

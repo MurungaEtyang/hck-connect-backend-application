@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import mime from 'mime-types';
 import { fileURLToPath } from 'url';
 
 const router = express.Router();
@@ -29,13 +30,37 @@ const logoDirectory = path.join(__dirname, '../../public/images/logos');
  *       404:
  *         description: No logo found to view.
  */
+
 router.get('/view', (req, res) => {
-    const logoPath = path.join(logoDirectory, 'current-logo.jpg');
-    if (fs.existsSync(logoPath)) {
-        res.sendFile(logoPath);
-    } else {
-        res.status(404).json({ message: 'No logo found to view.' });
+    if (!fs.existsSync(logoDirectory)) {
+        return res.status(404).json({ message: 'No logo directory found.' });
     }
+
+    const files = fs.readdirSync(logoDirectory);
+
+    if (files.length === 0) {
+        return res.status(404).json({ message: 'No logo found to view.' });
+    }
+
+    const imageFiles = files.filter(file => {
+        const mimeType = mime.lookup(file);
+        return mimeType && mimeType.startsWith('image');
+    });
+
+    if (imageFiles.length === 0) {
+        return res.status(404).json({ message: 'No valid image files found.' });
+    }
+
+    const latestFile = imageFiles
+        .map(file => ({
+            file,
+            mtime: fs.statSync(path.join(logoDirectory, file)).mtime,
+        }))
+        .sort((a, b) => b.mtime - a.mtime)[0].file;
+
+    const logoPath = path.join(logoDirectory, latestFile);
+    res.sendFile(logoPath);
 });
+
 
 export default router;

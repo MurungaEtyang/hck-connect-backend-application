@@ -12,7 +12,8 @@ import {serveFolderIndex} from "./models/folderService.js";
 
 const app = express();
 
-const allowedOrigins = ['https://7bf0-102-0-17-52.ngrok-free.app', 'http://localhost:3000', 'http://localhost:5000', 'https://anotherdomain.com'];
+const allowedOrigins = ['https://7bf0-102-0-17-52.ngrok-free.app', 'https://618f-102-0-11-106.ngrok-free.app', 'http://localhost:3000',
+    'http://localhost:5000', 'http://127.0.0.1:5500', 'http://localhost:63342', 'http://localhost:3001'];
 
 const corsOptions = {
     origin: (origin, callback) => {

@@ -37,6 +37,9 @@ const router = Router();
  *                 text_align:
  *                   type: string
  *                   example: 'left'
+ *                 text_color:
+ *                   type: string
+ *                   description: The color of the body text
  *       500:
  *         description: Error fetching body settings
  */
@@ -55,6 +58,7 @@ router.get('/retrieve-body-settings', async (req, res) => {
                 font_color: '#000000',
                 line_height: '1.5',
                 text_align: 'left',
+                text_color: '#000000',
             });
         }
     } catch (error) {

@@ -2,15 +2,15 @@ const topStory = {
     id: 1,
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
     title: 'The Future of Artificial Intelligence',
-    views: 1400,
+    likes: 1400,
     explanation: 'Artificial Intelligence has come a long way...',
-    link: '#',
     description: {
         author: 'Evans Murunga',
         date: '2022-01-01',
         description: 'Full information about AI advancements.',
         tags: 'technology'
-    }
+    },
+    publishedAt: '2022-01-01T12:10:00Z'
 };
 
 const articlesData = [
@@ -18,7 +18,7 @@ const articlesData = [
         id: 1,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
         title: 'The Future of Artificial Intelligence',
-        views: 1400,
+        likes: 1400,
         explanation: 'Artificial Intelligence has come a long way...',
         description: {
             author: 'Evans Murunga',
@@ -27,11 +27,12 @@ const articlesData = [
             tags: 'technology'
         },
         publishedAt: '2022-01-01T12:10:00Z'
-    },{
+    },
+    {
         id: 1,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
-        title: 'The Future lkijuhygh Intelligence',
-        views: 14000000,
+        title: 'The Future of Artificial Intelligence',
+        likes: 1400,
         explanation: 'Artificial Intelligence has come a long way...',
         description: {
             author: 'Evans Murunga',
@@ -39,25 +40,67 @@ const articlesData = [
             description: 'Full information about AI advancements.',
             tags: 'technology'
         },
-        publishedAt: '2022-01-01T12:09:00Z'
+        publishedAt: '2022-01-01T12:10:00Z'
     },
     {
         id: 1,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
-        title: 'The Fuficial Intelligence',
-        views: 140,
+        title: 'The Future of Artificial Intelligence',
+        likes: 1400,
         explanation: 'Artificial Intelligence has come a long way...',
         description: {
             author: 'Evans Murunga',
-            date: '2024-01-01',
+            date: '2022-01-01',
             description: 'Full information about AI advancements.',
             tags: 'technology'
         },
-        publishedAt: '2024-01-01T12:12:00Z'
+        publishedAt: '2022-01-01T12:10:00Z'
     },
+    {
+        id: 1,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
+        title: 'The Future of Artificial Intelligence',
+        likes: 1400,
+        explanation: 'Artificial Intelligence has come a long way...',
+        description: {
+            author: 'Evans Murunga',
+            date: '2022-01-01',
+            description: 'Full information about AI advancements.',
+            tags: 'technology'
+        },
+        publishedAt: '2022-01-01T12:10:00Z'
+    },
+    {
+        id: 1,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
+        title: 'The Future of Artificial Intelligence',
+        likes: 1400,
+        explanation: 'Artificial Intelligence has come a long way...',
+        description: {
+            author: 'Evans Murunga',
+            date: '2022-01-01',
+            description: 'Full information about AI advancements.',
+            tags: 'technology'
+        },
+        publishedAt: '2022-01-01T12:10:00Z'
+    },
+    {
+        id: 1,
+        image: 'https://encrypted-tbn0.gstatclass="col-lg-4" id="trendic.com/images?q=tbn:ANd9GcSz1wzkFjgREGO_Eeru8x7J0hZb1NBaYDSoew&s',
+        title: 'The Future of Artificial Intelligence',
+        likes: 1400,
+        explanation: 'Artificial Intelligence has come a long way...',
+        description: {
+            author: 'Evans Murunga',
+            date: '2022-01-01',
+            description: 'Full information about AI advancements.',
+            tags: 'technology'
+        },
+        publishedAt: '2022-01-01T12:10:00Z'
+    }
 ];
 
-const trendingStories = articlesData.sort((a, b) => b.views - a.views).slice(0, 8);
+const trendingStories = articlesData.sort((a, b) => b.likes - a.likes).slice(0, 8);
 
 class Articles {
     constructor(articles) {
@@ -73,7 +116,7 @@ class Articles {
                     description: article.description.description,
                     tags: article.description.tags
                 },
-                views: article.views
+                likes: article.likes
             }
         });
     }
@@ -109,16 +152,20 @@ function showNotification(action, title) {
 function renderTopStory() {
     const topStoryElement = document.getElementById('top-story');
     topStoryElement.innerHTML = `
-        <a href="${topStory.link}" class="card text-decoration-none border border-primary">
+        <div class="card border border-primary">
             <img src="${topStory.image}" class="card-img-top" alt="${topStory.title}">
             <div class="card-body">
                 <h5 class="card-title">${topStory.title}</h5>
-                <p class="card-text">${topStory.explanation}</p>
+                <p class="card-text">${topStory.description.description}</p>
                 <p class="text-muted">By ${topStory.description.author}, ${topStory.description.date}</p>
-                <button onclick="showNotification('Like', '${topStory.title}')" class="btn btn-light">Like</button>
-                <button onclick="showNotification('Share', '${topStory.title}')" class="btn btn-light">Share</button>
+                <button onclick="showNotification('Like', '${topStory.title}')" class="btn btn-light">
+                    <img src="/home/assests/img/like-solid.svg" width="20" height="20" alt="Share">
+                </button>
+                <button onclick="showNotification('Share', '${topStory.title}')" class="btn btn-light">
+                    <img src="/home/assests/img/share-solid.svg" width="20" height="20" alt="Share">
+                </button>
             </div>
-        </a>
+        </div>
     `;
 }
 
@@ -129,10 +176,10 @@ function renderTrendingStories() {
             <div class="card-body">
                 <h5 class="card-title">Trending Stories</h5>
                 ${trendingStories.map(story => `
-                    <a href="${story.link}" class="d-flex align-items-start mb-3 text-decoration-none">
+                    <div class="d-flex align-items-start mb-3">
                         <img src="${story.image}" class="rounded me-3 border border-secondary" alt="${story.title}" style="width: 50px; height: 50px;">
-                        <p class="mb-0 text-dark">${story.title} <span class="badge bg-secondary">${story.views}</span></p>
-                    </a>
+                        <p class="mb-0 text-dark">${story.title} <span class="badge bg-secondary">${story.likes}</span></p>
+                    </div>
                 `).join('')}
             </div>
         </div>
@@ -156,7 +203,8 @@ function renderArticles() {
                     <p class="text-muted small mb-1">${Array.isArray(article.fullDetails.tags) ? article.fullDetails.tags.join(', ') : article.fullDetails.tags}</p>
                     <h3 class="mb-2">${article.title}</h3>
                     <p>${article.smallDescription}</p>
-                    <p class="text-muted small">Views: ${article.views}</p>
+                    <button class="text-muted small">
+                    <img src="/home/assests/img/like-solid.svg" width="20" height="20" alt="Share"> ${article.likes}</button>
                 </div>
             </div>
         `;
@@ -184,3 +232,6 @@ function showMoreArticles() {
 renderTopStory();
 renderTrendingStories();
 renderArticles();
+
+
+

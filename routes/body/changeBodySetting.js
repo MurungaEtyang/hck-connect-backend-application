@@ -8,7 +8,7 @@ const router = Router();
  * /api/kenf/management/body-setting/update-body-settings:
  *   post:
  *     summary: Update the body styling (background color, font, etc.)
- *     description: Allows users to update various styling properties like background color, font family, font size, etc.
+ *     description: Allows users to update various styling properties like background color, font family, font size, text color, line height, and text alignment.
  *     tags:
  *         - body settings
  *     requestBody:
@@ -42,6 +42,10 @@ const router = Router();
  *                 type: string
  *                 description: The text alignment for the body content
  *                 example: 'left'
+ *               text_color:
+ *                 type: string
+ *                 description: The color of the body text
+ *                 example: '#000000'
  *     responses:
  *       200:
  *         description: Body styling updated successfully
@@ -74,6 +78,9 @@ const router = Router();
  *                     text_align:
  *                       type: string
  *                       example: 'left'
+ *                     text_color:
+ *                       type: string
+ *                       example: '#000000'
  *       400:
  *         description: Invalid input
  *       500:
@@ -81,7 +88,7 @@ const router = Router();
  */
 
 router.post('/update-body-settings', async (req, res) => {
-    const { color, font_family, font_size, font_color, line_height, text_align } = req.body;
+    const { color, font_family, font_size, font_color, line_height, text_align, text_color } = req.body;
 
     if (!/^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$/.test(color)) {
         return res.status(400).send('Invalid color format. Please provide a valid hex color.');
@@ -92,18 +99,22 @@ router.post('/update-body-settings', async (req, res) => {
         return res.status(400).send('Invalid font size format. Please provide a valid size (e.g., "16px", "1rem").');
     }
 
+    if (!/^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$/.test(text_color)) {
+        return res.status(400).send('Invalid text color format. Please provide a valid hex color.');
+    }
+
     try {
         const [existingSettings] = await pool.query('SELECT * FROM body_settings LIMIT 1');
 
         if (existingSettings.length > 0) {
             await pool.query(
-                'UPDATE body_settings SET color = ?, font_family = ?, font_size = ?, font_color = ?, line_height = ?, text_align = ? WHERE id = 1',
-                [color, font_family, font_size, font_color, line_height, text_align]
+                'UPDATE body_settings SET color = ?, font_family = ?, font_size = ?, font_color = ?, line_height = ?, text_align = ?, text_color = ? WHERE id = 1',
+                [color, font_family, font_size, font_color, line_height, text_align, text_color]
             );
         } else {
             await pool.query(
-                'INSERT INTO body_settings (color, font_family, font_size, font_color, line_height, text_align) VALUES (?, ?, ?, ?, ?, ?)',
-                [color, font_family, font_size, font_color, line_height, text_align]
+                'INSERT INTO body_settings (color, font_family, font_size, font_color, line_height, text_align, text_color) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [color, font_family, font_size, font_color, line_height, text_align, text_color]
             );
         }
 
